@@ -1,18 +1,19 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
-import { MatToolbarModule } from "@angular/material/toolbar";
+import { AngularMaterialModule } from './angular-material-module';
 
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
+
 import { CitiesComponent } from './cities/cities.component';
+import { CountriesComponent } from './countries/countries.component';
+
 
 @NgModule({
   declarations: [
@@ -20,12 +21,12 @@ import { CitiesComponent } from './cities/cities.component';
     HomeComponent,
     NavMenuComponent,
     CitiesComponent,
+    CountriesComponent,
 
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule,
-    RouterModule, AppRoutingModule, MatButtonModule, MatIconModule,
-    MatToolbarModule
+    RouterModule, AppRoutingModule, AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
