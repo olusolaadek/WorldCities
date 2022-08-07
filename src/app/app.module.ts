@@ -12,12 +12,14 @@ import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { CitiesComponent } from './cities/cities.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavMenuComponent,
+    CitiesComponent,
 
   ],
   imports: [
