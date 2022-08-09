@@ -15,6 +15,7 @@ import { CitiesComponent } from './cities/cities.component';
 import { CountriesComponent } from './countries/countries.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,7 @@ import { CountriesComponent } from './countries/countries.component';
     NavMenuComponent,
     CitiesComponent,
     CountriesComponent,
+
 
   ],
   imports: [

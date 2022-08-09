@@ -9,7 +9,7 @@ const routes: Routes =
   [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'cities', component: CitiesComponent },
-    { path: 'countries', component: CountriesComponent, pathMatch: 'full' }
+    { path: 'countries', component: CountriesComponent }
     // { path: 'city', component: CitiesComponent }
   ];
 
