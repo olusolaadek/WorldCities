@@ -43,7 +43,7 @@ export class CityEditComponent implements OnInit {
       name: new FormControl(''),
       lat: new FormControl(''),
       lon: new FormControl(''),
-      countrId: new FormControl(''),
+      countryId: new FormControl(''),
     });
 
     this.loadData();
