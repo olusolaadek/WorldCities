@@ -1,6 +1,6 @@
 <div>
   <h1>{{title}}</h1>
-  <p *ngIf="!city"><em>Loading...</em></p>
+  <p *ngIf="this.id && !city"><em>Loading...</em></p>
   <div [formGroup]="form" (ngSubmit)="onSubmit()">
     <!-- Name -->
     <mat-form-field>
@@ -14,13 +14,17 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Longitude: </mat-label>
-      <input matInput formCOntrolName="lon" required placeholder="Insert longitude">
+      <input matInput formControlName="lon" required placeholder="Insert longitude">
     </mat-form-field>
+    <p>
+
+    </p>
     <div>
-      <button mat-flat-button color="primary" type="submit" click="onSubmit()">Save</button>
+      <button mat-flat-button color="primary" type="submit" (click)="onSubmit()">
+        {{this.id? "Save" : "Create"}}</button>
       <button mat-flat-button color="secondary" [routerLink]="['/cities']">Cancel</button>
     </div>
   </div>
 
 
-</div>>
+</div>
