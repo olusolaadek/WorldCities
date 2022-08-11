@@ -121,7 +121,7 @@ export class CityEditComponent implements OnInit {
             {
               next: (result) => console.log("City " + result.id + " has been created."),
               error: (err) => console.log("Post error", err),
-              complete: () => console.log("Completed.")
+              complete: () => this.router.navigate(['/cities'])
             }
           )
         // .subscribe(result => {
