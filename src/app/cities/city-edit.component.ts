@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { environment } from './../../environments/environment';
 import { City } from './city';
@@ -40,10 +40,10 @@ export class CityEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl(''),
-      lat: new FormControl(''),
-      lon: new FormControl(''),
-      countryId: new FormControl(''),
+      name: new FormControl('', Validators.required),
+      lat: new FormControl('', Validators.required),
+      lon: new FormControl('', Validators.required),
+      countryId: new FormControl('', Validators.required),
     });
 
     this.loadData();
@@ -103,7 +103,7 @@ export class CityEditComponent implements OnInit {
           .subscribe({
             next: (result) => { console.log("City " + city!.id + " has been updated."); },
             error: (err) => console.log("Update Error: ", err),
-            complete: () => console.log("Update is completed!!!")
+            complete: () => this.router.navigate(['/cities'])
           })
         // .subscribe(result => {
         //   console.log("City " + city!.id + " has been updated.");
