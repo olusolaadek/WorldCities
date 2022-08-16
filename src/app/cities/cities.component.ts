@@ -2,6 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+
 import { environment } from 'src/environments/environment';
 import { MatSort } from "@angular/material/sort";
 
