@@ -68,31 +68,7 @@ export class CityEditComponent implements OnInit {
     }
   }
 
-  loadData() {
-    this.loadCountries();
-    // retrieve the ID from the 'id' parameter
-    var idParam = this.activatedRoute.snapshot.paramMap.get('id');
-    this.id = idParam ? +idParam : 0;
 
-    if (this.id) {
-      // fetch the city from the server
-      var url = environment.baseUrl + 'api/Cities/' + this.id;
-
-      this.http.get<City>(url).subscribe(result => {
-        this.city = result;
-        this.title = "Edit - " + this.city.name;
-
-        // update the form with the city value
-        this.form.patchValue(this.city);
-      }, error => console.log(error))
-    }
-    else {
-      // Add new mode
-      this.title = 'Create a new city';
-    }
-
-
-  }
   loadCountries() {
     // fetch all the countries from the server
     var url = this.baseUrl + 'api/countries';
@@ -154,5 +130,29 @@ export class CityEditComponent implements OnInit {
 
     }
   }
+  loadData() {
+    this.loadCountries();
+    // retrieve the ID from the 'id' parameter
+    var idParam = this.activatedRoute.snapshot.paramMap.get('id');
+    this.id = idParam ? +idParam : 0;
 
+    if (this.id) {
+      // fetch the city from the server
+      var url = environment.baseUrl + 'api/Cities/' + this.id;
+
+      this.http.get<City>(url).subscribe(result => {
+        this.city = result;
+        this.title = "Edit - " + this.city.name;
+
+        // update the form with the city value
+        this.form.patchValue(this.city);
+      }, error => console.log(error))
+    }
+    else {
+      // Add new mode
+      this.title = 'Create a new city';
+    }
+
+
+  }
 }

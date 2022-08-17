@@ -61,8 +61,10 @@
       </select>
     </p> -->
     <div>
-      <button mat-flat-button color="primary" type="submit" (click)="onSubmit()">
-        {{this.id? "Save" : "Create"}}</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">
+        <!-- (click)="onSubmit()" -->
+        {{this.id ? "Save" : "Create"}}
+      </button>
       <button mat-flat-button color="secondary" [routerLink]="['/cities']">Cancel</button>
     </div>
   </div>
