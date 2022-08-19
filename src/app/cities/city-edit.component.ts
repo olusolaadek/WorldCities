@@ -7,18 +7,19 @@ import { environment } from './../../environments/environment';
 import { City } from './city';
 import { Country } from './../countries/country';
 import { map, Observable } from 'rxjs';
+import { BaseFormComponent } from '../base-form.component';
 
 @Component({
   selector: 'app-city-edit',
   templateUrl: './city-edit.component.html',
   styleUrls: ['./city-edit.component.scss']
 })
-export class CityEditComponent implements OnInit {
+export class CityEditComponent extends BaseFormComponent implements OnInit {
   // the view title
   title?: string;
   // the form model
   // the form model
-  form!: FormGroup;
+  // form!: FormGroup; // inherited from BaseFormComponent
   // the city object to edit or create
   city?: City;
 
@@ -36,7 +37,7 @@ export class CityEditComponent implements OnInit {
     private router: Router,
     private http: HttpClient
   ) {
-
+    super();
   }
 
   ngOnInit(): void {
