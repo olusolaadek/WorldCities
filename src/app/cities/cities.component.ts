@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { Observable, Subject } from "rxjs";
+import { map, debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 import { environment } from 'src/environments/environment';
 import { MatSort } from "@angular/material/sort";
@@ -31,11 +31,25 @@ export class CitiesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  filterTextChanged: Subject<string> = new Subject<string>();
+
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     //
     this.loadData(undefined);
+  }
+
+  // debounce filter text changes
+  onFilterTextChanged(filterText: string) {
+    if (this.filterTextChanged.observers.length === 0) {
+      this.filterTextChanged
+        .pipe(debounceTime(1000), distinctUntilChanged())
+        .subscribe(query => {
+          this.loadData(query);
+        });
+    }
+    this.filterTextChanged.next(filterText);
   }
   loadData(query?: string) {
     var pageEvent = new PageEvent();
