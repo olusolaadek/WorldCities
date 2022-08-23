@@ -43,8 +43,15 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
-      lat: new FormControl('', Validators.required),
-      lon: new FormControl('', Validators.required),
+      lat: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[-]?[0-9]+(\.[0-9]{1,4})?$/)
+      ]),
+      lon: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[-]?[0-9]+(\.[0-9]{1,4})?$/)
+      ]
+      ),
       countryId: new FormControl('', Validators.required),
     }, null, this.isDupeCity());
 
@@ -86,6 +93,7 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
 
   }
   onSubmit() {
+    // alert("Submitting...");
     var city = (this.id) ? this.city : <City>{};
     if (city) {
       city.name = this.form.controls['name'].value;

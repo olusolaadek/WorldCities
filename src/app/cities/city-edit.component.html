@@ -1,7 +1,7 @@
 <div class="city-edit">
   <h1>{{title}}</h1>
   <p *ngIf="this.id && !city"><em>Loading...</em></p>
-  <div [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <p>
       <mat-error *ngIf="form.invalid && form.hasError('isDupeCity')">
@@ -15,27 +15,38 @@
     <mat-form-field>
       <mat-label>Name: </mat-label>
       <input matInput formControlName="name" required placeholder="Type a name">
-      <mat-error *ngIf="this.form.controls['name'].errors?.['required']">
-        Name is required.
+      <mat-error *ngFor="let error of getErrors(form.get('name')!, 'Name',
+      {'pattern': 'requires valid alpha-numeric characters'})">
+        {{error}}
       </mat-error>
     </mat-form-field>
-
+    <!-- <mat-error *ngIf="this.form.controls['name'].errors?.['required']">
+      Name is required.
+    </mat-error> -->
 
     <!-- Lat -->
     <mat-form-field>
       <mat-label>Latitude: </mat-label>
       <input matInput formControlName="lat" required placeholder="Insert latitude">
-      <mat-error *ngIf="this.form.controls['lat'].errors?.['required']">
-        Latitude is required.
+      <mat-error *ngFor="let error of getErrors(form.get('lat')!, 'Latitude',
+      {'pattern': 'requires a positive or negative number with 0-5 decimal'})">
+        {{error}}
       </mat-error>
+      <!-- <mat-error *ngIf="this.form.controls['lat'].errors?.['required']">
+        Latitude is required.
+      </mat-error> -->
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Longitude: </mat-label>
       <input matInput formControlName="lon" required placeholder="Insert longitude">
-      <mat-error *ngIf="this.form.controls['lon'].errors?.['required']">
-        Longitude is required.
+      <mat-error *ngFor="let error of getErrors(form.get('lon')!, 'Longitude',
+      {'pattern': 'requires a positive or negative number with 0-5 decimal'})">
+        {{error}}
       </mat-error>
+      <!-- <mat-error *ngIf="this.form.controls['lon'].errors?.['required']">
+        Longitude is required.
+      </mat-error> -->
     </mat-form-field>
 
 
@@ -61,13 +72,13 @@
       </select>
     </p> -->
     <div>
-      <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">
+      <button mat-flat-button color="primary" type="submit" [disabled]=" !form.valid">
         <!-- (click)="onSubmit()" -->
         {{this.id ? "Save" : "Create"}}
       </button>
       <button mat-flat-button color="secondary" [routerLink]="['/cities']">Cancel</button>
     </div>
-  </div>
+  </form>
 
 
 </div>
