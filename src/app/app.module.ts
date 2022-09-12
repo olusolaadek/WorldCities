@@ -16,6 +16,7 @@ import { CountriesComponent } from './countries/countries.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CityEditComponent } from './cities/city-edit.component';
 import { CountryEditComponent } from './countries/country-edit.component';
+import { LoginComponent } from './login.component';
 
 
 
@@ -27,7 +28,8 @@ import { CountryEditComponent } from './countries/country-edit.component';
     CitiesComponent,
     CountriesComponent,
     CityEditComponent,
-    CountryEditComponent
+    CountryEditComponent,
+    LoginComponent
 
 
 
