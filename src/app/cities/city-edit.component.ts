@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators, AsyncValidatorFn, AbstractControl }
 import { environment } from './../../environments/environment';
 import { City } from './city';
 import { Country } from './../countries/country';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { BaseFormComponent } from '../base-form.component';
 import { CityService } from './city.service';
 
@@ -25,7 +25,7 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
   city?: City;
 
   // the countries array for the select
-  countries?: Country[];
+  countries?: Observable<Country[]>;
   // the city object id, as fetched from the active route:
   // It's NULL when we're adding a new city,
   // and not NULL when we're editing an existing one.
@@ -33,6 +33,11 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
 
   // base URL for API requests
   baseUrl?: string = environment.baseUrl;
+
+  activityLog: string = "";
+
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -57,8 +62,36 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
       countryId: new FormControl('', Validators.required),
     }, null, this.isDupeCity());
 
+    // Observe changes in the form.
+
+    this.subscriptions.add(this.form.valueChanges
+      .subscribe(() => {
+        if (!this.form.dirty) {
+          this.log('Form model has been loaded.');
+        }
+        else {
+          this.log('Form was updated by the user.');
+        }
+      }));
+
+    this.subscriptions.add(
+      this.form.get("name")!.valueChanges
+        .subscribe(() => {
+          if (!this.form.dirty) {
+            this.log("Name has been loaded with initial values");
+          }
+          else {
+            this.log("Name was updated by the user");
+          }
+        })
+    );
+
     this.loadData();
 
+  }
+  log(str: string) {
+    // this.activityLog += "[" + new Date().toLocaleDateString() + "]: " + str + "<br />";
+    console.log("[" + new Date().toLocaleDateString() + "]: " + str + "<br />");
   }
 
   isDupeCity(): AsyncValidatorFn {
@@ -90,11 +123,13 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
 
     this.cityService.getCountries(
       0, 9999, 'name', "asc", null, null
-    ).subscribe({
-      next: (result) => this.countries = result.data,
-      error: (err) => console.log("Load country failed!", err),
-      complete: () => console.log("Complete")
-    });
+    ).pipe(map(x => x.data));
+
+    // .subscribe({
+    //   next: (result) => this.countries = result.data,
+    //   error: (err) => console.log("Load country failed!", err),
+    //   complete: () => console.log("Complete")
+    // });
 
   }
   onSubmit() {
@@ -169,5 +204,9 @@ export class CityEditComponent extends BaseFormComponent implements OnInit {
     }
 
 
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

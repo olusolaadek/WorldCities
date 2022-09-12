@@ -126,7 +126,7 @@ export class CountryEditComponent extends BaseFormComponent implements OnInit {
               // this.router.navigate(['/countries']);
             },
             error: (error) => console.error(error),
-            complete: () => this.router.navigate(['/countries']);
+            complete: () => this.router.navigate(['/countries'])
 
           });
       }
