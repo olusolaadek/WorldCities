@@ -16,9 +16,7 @@ import { CountriesComponent } from './countries/countries.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CityEditComponent } from './cities/city-edit.component';
 import { CountryEditComponent } from './countries/country-edit.component';
-import { LoginComponent } from './login.component';
-
-
+import { LoginComponent } from './auth/login.component';
 
 @NgModule({
   declarations: [
@@ -29,17 +27,19 @@ import { LoginComponent } from './login.component';
     CountriesComponent,
     CityEditComponent,
     CountryEditComponent,
-    LoginComponent
-
-
-
+    LoginComponent,
   ],
   imports: [
-    BrowserModule, HttpClientModule, BrowserAnimationsModule,
-    RouterModule, AppRoutingModule, AngularMaterialModule,
-    ReactiveFormsModule, FormsModule
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    AppRoutingModule,
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
