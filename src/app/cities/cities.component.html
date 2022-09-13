@@ -1,9 +1,10 @@
 <div class="container">
-  <h1>Cities</h1>
+  <h1>Cities </h1>
   <p>Here's a list of cities: feel free to play with it.</p>
   <div *ngIf="!cities"><em>Loading...</em></div>
 
-  <button mat-flat-button color="primary" class="btn-add" *ngIf="cities" [routerLink]="['/city']">Add a new
+  <button mat-flat-button color="primary" class="btn-add" *ngIf="cities && isAuthenticated" [routerLink]="['/city']">Add
+    a new
     city</button>
 
 

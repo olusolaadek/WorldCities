@@ -1,32 +1,39 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { Observable, Subject } from "rxjs";
-import { map, debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Observable, Subject } from 'rxjs';
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 // import { environment } from 'src/environments/environment';
-import { MatSort } from "@angular/material/sort";
+import { MatSort } from '@angular/material/sort';
 
 import { City } from './city';
 import { CityService } from './city.service';
-import { ApiResult } from '../base.service'
+import { ApiResult } from '../base.service';
+import { AuthService } from '../auth/auth-service';
 
 @Component({
   selector: 'app-cities',
   templateUrl: './cities.component.html',
-  styleUrls: ['./cities.component.scss']
+  styleUrls: ['./cities.component.scss'],
 })
 export class CitiesComponent implements OnInit {
-  public displayedColumns: string[] = ['id', 'name', 'lat', 'lon', 'countryName'];
+  public displayedColumns: string[] = [
+    'id',
+    'name',
+    'lat',
+    'lon',
+    'countryName',
+  ];
   public cities!: MatTableDataSource<City>; // public cities!: City[];
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
-  public defaultSortColumn: string = "name";
-  public defaultSortOrder: "asc" | "desc" = "asc";
+  public defaultSortColumn: string = 'name';
+  public defaultSortOrder: 'asc' | 'desc' = 'asc';
 
-  defaultFilterColumn: string = "name";
+  defaultFilterColumn: string = 'name';
   filterQuery?: string;
 
   // readup this
@@ -35,7 +42,13 @@ export class CitiesComponent implements OnInit {
 
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  constructor(private cityService: CityService) { }
+  //
+  isAuthenticated: boolean = this.authService.isAuthenticated();
+
+  constructor(
+    private cityService: CityService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     //
@@ -47,7 +60,7 @@ export class CitiesComponent implements OnInit {
     if (this.filterTextChanged.observers.length === 0) {
       this.filterTextChanged
         .pipe(debounceTime(1000), distinctUntilChanged())
-        .subscribe(query => {
+        .subscribe((query) => {
           this.loadData(query);
         });
     }
@@ -61,29 +74,22 @@ export class CitiesComponent implements OnInit {
     this.getData(pageEvent);
   }
   getData(event: PageEvent) {
-    var sortColumn = (this.sort)
-      ? this.sort.active
-      : this.defaultSortColumn;
-    var sortOrder = (this.sort)
-      ? this.sort.direction
-      : this.defaultSortOrder;
+    var sortColumn = this.sort ? this.sort.active : this.defaultSortColumn;
+    var sortOrder = this.sort ? this.sort.direction : this.defaultSortOrder;
 
-    var filterColumn = (this.filterQuery)
-      ? this.defaultFilterColumn
-      : null;
-    var filterQuery = (this.filterQuery)
-      ? this.filterQuery
-      : null;
+    var filterColumn = this.filterQuery ? this.defaultFilterColumn : null;
+    var filterQuery = this.filterQuery ? this.filterQuery : null;
 
-    this.cityService.getData(
-      event.pageIndex,
-      event.pageSize,
-      sortColumn,
-      sortOrder,
-      filterColumn,
-      filterQuery
-    ).subscribe(
-      {
+    this.cityService
+      .getData(
+        event.pageIndex,
+        event.pageSize,
+        sortColumn,
+        sortOrder,
+        filterColumn,
+        filterQuery
+      )
+      .subscribe({
         next: (result) => {
           this.paginator.length = result.totalCount;
           this.paginator.pageIndex = result.pageIndex;
@@ -91,9 +97,8 @@ export class CitiesComponent implements OnInit {
           this.cities = new MatTableDataSource<City>(result.data);
         },
         error: (error) => console.log(error),
-        complete: () => console.log('complete')
-      }
-    );
+        complete: () => console.log('complete'),
+      });
 
     // result => {
     //   this.paginator.length = result.totalCount;
@@ -101,5 +106,4 @@ export class CitiesComponent implements OnInit {
     //   this.cities = new MatTableDataSource<City>(result.data);
     // }, error => console.log(error));
   }
-
 }
