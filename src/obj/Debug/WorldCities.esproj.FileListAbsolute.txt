@@ -1,3 +1,2 @@
 C:\workspace\FullStack_dev\dotnet-angular\Net6AndAngular\WorldCitiesSoln\WorldCities\obj\Debug\WorldCities.esproj.SuggestedBindingRedirects.cache
 C:\workspace\FullStack_dev\dotnet-angular\Net6AndAngular\WorldCitiesSoln\WorldCities\obj\Debug\WorldCities.esproj.CoreCompileInputs.cache
-D:\Workspace\FullStack_dev\dotnet-angular\Net6AndAngular\WorldCitiesSoln\WorldCities\obj\Debug\WorldCities.esproj.CoreCompileInputs.cache
