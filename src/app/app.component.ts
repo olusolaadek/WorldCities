@@ -10,7 +10,7 @@ import { ConnectionService } from 'angular-connection-service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'WorldCities';
+  title = 'World Cities';
 
   hasNetworkConnection: boolean = true;
   hasInternetAccess: boolean = true;
